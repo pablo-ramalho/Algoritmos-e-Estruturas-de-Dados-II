@@ -1,0 +1,57 @@
+@startuml Estruturas
++class Grafo{
+    -vertice[]: Lista
+
+    +dijkstra(source: Integer, destination: Integer): Lista
+    -inicializaDijkstra(source: Integer, distancia[]: Integer, pai[]: Integer, fechado[]: Boolean): void
+    -existemVerticesAbertos(fechado[]: Boolean): Boolean
+    -verticeComMenorEstimativa(distancia[]: Integer, fechado[]: Boolean): Integer
+    +atribuirGraus(): void
+    +lerGrau(): Integer
+    +adicionarAresta(vertice1: Integer, vertice2: Integer, peso: Integer): void
+    +imprimirGrafo(): void
+    +getVertice(vertice: Integer): Lista
+
+}
+
++class Lista{
+    -head: Node
+    -tail: Node
+    -rotulo: Integer
+    -numeroDeElementos: Integer
+
+    +adicionarNoInicio(vertice: Integer, peso: Integer, novo: Node): void
+    +adicionarNoFinal(vertice: Integer, peso: Integer, novo: Node): void
+    +removerDoInicio(): Node
+    +remover(posicao: Integer): Node
+    +removerDoFinal(): Node
+    +imprimir(): void
+    +getHead(): Node
+    +setHead(head: Node): void
+    +getTail(): Node
+    +setTail(tail: Node): void
+    +getRotulo(): Node
+    +setRotulo(rotulo: Integer): void
+    +getNumeroDeElementos(): Integer
+    +setNumeroDeElementos(numeroDeElementos: Integer): void
+
+}
+
++class Node{
+    -identificador: Integer
+    -peso: Integer
+    -next: Node
+
+    +getIdentificador(): Integer
+    +setIdentificador(identificador: Integer): void
+    +getPeso(): Integer
+    +setPeso(peso: Integer): void
+    +getNext(): Node
+    +setNext(next: Node): void
+
+}
+
+Grafo --o "1..20" Lista
+Lista --o "2..2" Node
+
+@enduml

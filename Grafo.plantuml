@@ -1,0 +1,15 @@
+@startuml Esquema
+
+skinparam BackgroundColor #3b3b3b
+skinparam ArrowColor #orange
+
+(1) -right-> (0): <font color=white>7</font>
+(1) -down-> (3): <font color=white>3</font>
+
+(0) --> (2): <font color=white>8</font>
+(3) --> (2): <font color=white>5</font>
+
+(3) -right-> (0): <font color=white>10</font>
+(0) -left-> (3): <font color=white>2</font>
+
+@enduml
