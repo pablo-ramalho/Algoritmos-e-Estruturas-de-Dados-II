@@ -191,8 +191,6 @@ public class Grafo{
 
         }while(grau < 0 || grau > this.vertice.length);
 
-        //leitor.close();
-
         return grau;
 
     }
