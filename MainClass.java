@@ -70,8 +70,6 @@ public class MainClass{
         
         //====================================================================
 
-        //leitor.close();
-
     }
 
     /**
@@ -93,8 +91,6 @@ public class MainClass{
             System.out.print((numeroDeVertices <= 0 || numeroDeVertices > 20) ? "Quantidade de vértices inválida. Por favor digite uma quantidade válida: " : "Você solicitou a criação de " + numeroDeVertices + " vértices\n");
 
         }while(numeroDeVertices <= 0 || numeroDeVertices > 20);
-
-        //leitor.close();
 
         return numeroDeVertices;
 
