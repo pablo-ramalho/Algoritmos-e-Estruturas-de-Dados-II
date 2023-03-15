@@ -96,6 +96,7 @@ public class Grafo{
             }
 
             arestas.poll();
+            arestas.poll();
 
         }
 
