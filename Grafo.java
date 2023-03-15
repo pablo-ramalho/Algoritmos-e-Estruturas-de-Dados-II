@@ -3,8 +3,6 @@ package Kruskal;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Esta classe representa um grafo tendo
