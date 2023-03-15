@@ -45,7 +45,7 @@ public class MainClass{
         //========================KRUSKAL====================
         mst = grafo.kruskal(grafo);
 
-        System.out.println("ÁRVORE GERADORA MÍNIMA OBTIDA:");
+        System.out.println("\nÁRVORE GERADORA MÍNIMA OBTIDA:");
         mst.imprimirGrafo();
 
         //===================================================

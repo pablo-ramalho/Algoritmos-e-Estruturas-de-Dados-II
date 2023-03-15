@@ -253,6 +253,7 @@ public class Lista implements Comparable<Lista>{
     }
 
     //========================KRUSKAL===========================
+
     @Override
     public int compareTo(Lista vertice){
         

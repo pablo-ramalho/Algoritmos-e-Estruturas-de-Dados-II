@@ -95,6 +95,8 @@ public class Grafo{
 
             }
 
+            arestas.poll();
+
         }
 
         return mst;
