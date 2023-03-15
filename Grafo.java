@@ -91,10 +91,11 @@ public class Grafo{
 
                 }
 
+            }else{
+                 arestas.poll();
+                 arestas.poll();
+                
             }
-
-            arestas.poll();
-            arestas.poll();
 
         }
 
@@ -116,17 +117,17 @@ public class Grafo{
 
         if(mst.vertice[vertice1].getHead() != null){
 
-        for(atual = mst.vertice[vertice1].getHead(); atual != null; atual = atual.getNext()){
+              for(atual = mst.vertice[vertice1].getHead(); atual != null; atual = atual.getNext()){
 
-             if(auxiliar.getIdentificador() == vertice2){
-                same = true;
-                break;
+                   if(auxiliar.getIdentificador() == vertice2){
+                      same = true;
+                      break;
 
-            }
+                   }
+
+              }
 
          }
-
-       }
 
         return same;
 
