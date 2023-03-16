@@ -257,7 +257,7 @@ public class Lista implements Comparable<Lista>{
     @Override
     public int compareTo(Lista vertice){
         
-        if(this.getHead().getPeso() < vertice.getHead().getPeso())
+        if(this.getHead().getPeso() <= vertice.getHead().getPeso())
             return -1;
 
         else
