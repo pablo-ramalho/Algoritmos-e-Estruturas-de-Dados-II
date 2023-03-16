@@ -88,7 +88,7 @@ public class Grafo{
                 
                 for(index = 0; index < 2; index++){
                     aresta = arestas.poll();
-                    mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), aresta.getHead());
+                    mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), new Node(aresta.getHead().getIdentificador(), aresta.getHead().getPeso());
                 
                 }
 
