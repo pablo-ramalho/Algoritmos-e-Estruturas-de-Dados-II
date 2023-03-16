@@ -79,7 +79,7 @@ public class Grafo{
          * Seleciona e adiciona as arestas seguras 
          * à árvore geradora mínima a partir da fila de prioridade
         */
-        while(arestas.size() != 0){
+        while(arestas.isEmpty() != false){
 
             aresta = arestas.peek();
             
