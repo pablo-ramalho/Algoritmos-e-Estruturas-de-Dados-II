@@ -81,23 +81,19 @@ public class Grafo{
         */
         while(arestas.isEmpty() != false){
 
-            aresta = arestas.peek();
+            aresta = arestas.poll();
             
             //Se a próxima aresta obtida na fila de prioridade não forma um ciclo entre os dois vértices ela é adicionada à árvore geradora mínima
             if(this.mesmoConjunto(aresta.getRotulo(), aresta.getHead().getIdentificador(), mst) == false){
                 
-                for(index = 0; index < 2; index++){
-                    aresta = arestas.poll();
-                    mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), new Node(aresta.getHead().getIdentificador(), aresta.getHead().getPeso());
+                mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), aresta.getHead());
                 
-                }
+                aresta = arestas.poll();
+                mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), aresta.getHead());
 
             //Caso contrário a próxima aresta obtida na fila de prioridade é descartada
-            }else{
+            }else
                  arestas.poll();
-                 arestas.poll();
-                
-            }
 
         }
 
