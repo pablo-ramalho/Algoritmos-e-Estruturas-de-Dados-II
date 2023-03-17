@@ -44,7 +44,7 @@ public class Grafo{
     public Grafo kruskal(Grafo grafoOriginal){
         Grafo mst;                   //Árvore geradora mínima criada a partir do grafo original
         Queue<Lista> arestas = null; //Armazena as arestas do grafo original (inicialmente vazia)
-        Integer index;               //Percorre a lista de adjacências (de 0 a n - 1, onde n corresponde ao número de vértices do grafo) e serve como índice iterador para adicionar as arestas bidirecionais
+        Integer index;               //Percorre a lista de adjacências (de 0 a n - 1, onde n corresponde ao número de vértices do grafo)
         Node atual;                  //Itera sobre as adjacências de cada vértice
         Lista aresta;                //Armazena temporariamente informações de cada aresta para incluí-las na fiia de prioridade
 
@@ -60,18 +60,23 @@ public class Grafo{
          * a ordenação dos elementos por padrão em ordem crescente
          */
         for(index = 0; index < grafoOriginal.vertice.length; index++){
+            
             for(atual = grafoOriginal.vertice[index].getHead(); atual != null; atual = atual.getNext()){
-                //Adiciona a aresta à fila de prioridade (Exemplo: 2 --> 1)
-                aresta = new Lista(index, 1);
-                aresta.adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), atual);
-                arestas.offer(aresta);
 
-                //Adiciona a aresta simétrica à fila de prioridade (1 --> 2)
-                aresta = new Lista(atual.getIdentificador(), 1);
-                aresta.adicionarNoInicio(index, atual.getPeso(), new Node(index, atual.getPeso()));
+                //Adiciona a aresta à fila de prioridade
+                aresta = new Lista(index, 1);
+
+                aresta.adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
                 arestas.offer(aresta);
 
             }
+
+        }
+
+        //TESTE
+        for(Lista aux : arestas){
+            System.out.print("[ " + aux.getRotulo() + " ] - " + aux.getHead().getPeso() + " -> ");
+            aux.imprimir();
 
         }
 
@@ -83,19 +88,25 @@ public class Grafo{
 
             aresta = arestas.poll();
             
-            //Se a próxima aresta obtida na fila de prioridade não forma um ciclo entre os dois vértices ela é adicionada à árvore geradora mínima
-            if(this.mesmoConjunto(aresta.getRotulo(), aresta.getHead().getIdentificador(), mst) == false){
+            for(atual = grafoOriginal.vertice[aresta.getRotulo].getHead(); atual != null; atual = atual.getNext()){
                 
-                mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), aresta.getHead());
+                //Se a próxima aresta obtida na fila de prioridade não forma um ciclo entre os dois vértices ela é adicionada à árvore geradora mínima
+                if(/*this.mesmoConjunto(aresta.getRotulo(), atual.getIdentificador(), mst, atual) == false*/){
                 
-                aresta = arestas.poll();
-                mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), aresta.getHead());
+                    mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), new Node(aresta.getHead().getIdentificador(), aresta.getHead().getPeso()));
+                    mst.vertice[aresta.getRotulo()].setNumeroDeElementos(aresta.getNumeroDeElementos() + 1);
+                
+                    aresta = arestas.poll();
+                    mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), aresta.getHead(), new Node(aresta.getHead().getIdentificador(), aresta.getHead().getPeso()));
+                    mst.vertice[aresta.getRotulo()].setNumeroDeElementos(aresta.getNumeroDeElementos() + 1);
 
-            //Caso contrário a próxima aresta obtida na fila de prioridade é descartada
-            }else
-                 arestas.poll();
+                //Caso contrário a próxima aresta obtida na fila de prioridade é descartada
+                }else
+                    arestas.poll();
+                
+            }
 
-        }
+       }
 
         return mst;
 
@@ -109,11 +120,15 @@ public class Grafo{
      * @param mst a árvore geradora mínima obtida até o momento
      * @return <b>true</b> se os dois vértices estão no mesmo conjunto e <b>false</b> caso contrário
      */
-    private boolean mesmoConjunto(Integer vertice1, Integer vertice2, Grafo mst){
-        Node atual;
-        Boolean same = false;
+    private boolean mesmoConjunto(Integer vertice1, Integer vertice2, Grafo mst, Node aux){
+        //Node atual;
+        //Boolean same = false;
 
-        if(mst.vertice[vertice1].getHead() != null){
+        if(mst.vertice[vertice1])
+            
+        return false;
+        
+        /*if(mst.vertice[vertice1].getHead() != null){
 
               for(atual = mst.vertice[vertice1].getHead(); atual != null; atual = atual.getNext()){
 
@@ -125,9 +140,9 @@ public class Grafo{
 
               }
 
-         }
+        }*/
 
-        return same;
+        //return same;
 
     }
 
