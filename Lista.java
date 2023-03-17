@@ -257,14 +257,27 @@ public class Lista implements Comparable<Lista>{
     @Override
     public int compareTo(Lista vertice){
         
-        if(this.getHead().getPeso() <= vertice.getHead().getPeso())
+        if(this.getHead().getPeso() < vertice.getHead().getPeso())
             return -1;
 
         else
             if(this.getHead().getPeso() > vertice.getHead().getPeso())
                 return 1;
-
-        return 0;
+        
+        else{
+            
+            //Se as arestas tiverem o mesmo peso, os vértices são comparados
+            if(this.getRotulo() < vertice.getRotulo())
+                return -1;
+            
+            else
+                if(this.getRotulo() > vertice.getRotulo())
+                    return 1;
+                    
+            else
+                   return 0;
+            
+        }
         
     }
     //=========================================================
