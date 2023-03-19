@@ -111,13 +111,12 @@ public class Grafo{
                 mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), new Node(aresta.getHead().getIdentificador(), aresta.getHead().getPeso()));
                 mst.vertice[aresta.getRotulo()].setNumeroDeElementos(aresta.getNumeroDeElementos() + 1);
                 
-                aresta = arestas.poll();
-                mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), new Node(aresta.getHead().getIdentificador(), aresta.getHead().getPeso()));
-                mst.vertice[aresta.getRotulo()].setNumeroDeElementos(aresta.getNumeroDeElementos() + 1);
+                mst.vertice[aresta.getHead().getIdentificador()].adicionarNoFinal(aresta.getRotulo(), aresta.getHead().getPeso(), new Node(aresta.getRotulo(), aresta.getHead().getPeso()));
+                mst.vertice[aresta.getHead().getIdentificador()].setNumeroDeElementos(aresta.getNumeroDeElementos() + 1);
 
-            //Caso contrário a próxima aresta obtida na fila de prioridade é descartada
-            }else
-                 arestas.poll();
+            }
+        
+            //Caso contrário a aresta é descartada
 
         }
 
