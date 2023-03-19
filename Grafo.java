@@ -45,7 +45,7 @@ public class Grafo{
         Grafo mst;                   //Árvore geradora mínima criada a partir do grafo original
         Queue<Lista> arestas = null; //Armazena as arestas do grafo original (inicialmente vazia)
         Integer index;               //Percorre a lista de adjacências (de 0 a n - 1, onde n corresponde ao número de vértices do grafo) e serve como índice iterador para adicionar as arestas bidirecionais
-        Node atual;                  //Itera sobre as adjacências de cada vértice
+        Node atual, auxiliar;        //Itera sobre as adjacências de cada vértice
         Lista aresta;                //Armazena temporariamente informações de cada aresta para incluí-las na fiia de prioridade
 
         //Cria a floresta (inicialmente todos os vértices têm grau 0)
@@ -62,30 +62,27 @@ public class Grafo{
         for(index = 0; index < grafoOriginal.vertice.length; index++){
             
             for(atual = grafoOriginal.vertice[index].getHead(); atual != null; atual = atual.getNext()){
-
+                
                 //Restringe a adição das arestas simétricas na fila de prioridade
-                if(atual.getIdentificador() == grafoOriginal.vertice[atual.getIdentificador()].getRotulo()){
-                    Node auxiliar = grafoOriginal.vertice[atual.getIdentificador()].getHead();
+                auxiliar = grafoOriginal.vertice[atual.getIdentificador()].getHead();
+                
+                if(auxiliar != null){
 
-                    do{
+                      do{
                         
-                        if(auxiliar.getIdentificador() != grafoOriginal.vertice[index].getRotulo()){
-                            aresta = new Lista(index, 1);
-                            this.incluirCorte(aresta, arestas, atual);
+                          if(auxiliar.getIdentificador() != grafoOriginal.vertice[index].getRotulo()){
+                              aresta = new Lista(index, 1);
+                              aresta.adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
+                              arestas.offer(aresta);
                         
-                        }
+                          }
 
-                        auxiliar = auxiliar.getNext();
+                          auxiliar = auxiliar.getNext();
 
-                    }while(auxiliar.getIdentificador() != grafoOriginal.vertice[index].getRotulo() && auxiliar != null);
+                       }while(auxiliar != null);
 
-                }else{
+                 }
                     
-                    aresta = new Lista(index, 1);
-                    this.incluirCorte(aresta, arestas, atual);
-
-                }
-
             }
 
         }
@@ -121,15 +118,6 @@ public class Grafo{
         }
 
         return mst;
-
-    }
-
-    /**
-     * Adiciona a aresta à fila de prioridade
-     */
-    private void incluirCorte(Lista aresta, Queue<Lista> arestas, Node atual){
-        aresta.adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
-        arestas.offer(aresta);
 
     }
 
