@@ -129,8 +129,6 @@ public class Grafo{
      * Adiciona a aresta à fila de prioridade
      */
     private void incluirCorte(Lista aresta, Queue<Lista> arestas, Node atual){
-        
-        
         aresta.adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
         arestas.offer(aresta);
 
