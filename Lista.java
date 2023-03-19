@@ -256,18 +256,26 @@ public class Lista implements Comparable<Lista>{
 
     @Override
     public int compareTo(Lista aresta){
-        Integer weightDiff = Integer.compare(this.getHead().getPeso(), aresta.getHead().getPeso());
         
-        if(weightDiff != 0)
-            return weightDiff;
-                                   
-        if(Math.min(this.getRotulo(), aresta.getRotulo()) == this.getRotulo() && Math.min(this.getHead().getIdentificador(), aresta.getHead().getIdentificador()) == this.getHead().getIdentificador())
+        if(this.getHead().getPeso() < aresta.getHead().getPeso())
             return -1;
-        
-        if(Math.max(this.getRotulo(), aresta.getRotulo()) == this.getRotulo() && Math.max(this.getHead().getIdentificador(), aresta.getHead().getIdentificador()) == this.getHead().getIdentificador())
-            return 1;
-        
-        return 0;
+
+        else
+            if(this.getHead().getPeso() > aresta.getHead().getPeso())
+                return 1;
+
+        else{
+
+            if(this.getRotulo() < aresta.getRotulo())
+                return -1;
+
+            else
+                if(this.getRotulo() > aresta.getRotulo())
+                    return 1;
+
+            return 0;
+
+        }
 
     }
     //=========================================================
