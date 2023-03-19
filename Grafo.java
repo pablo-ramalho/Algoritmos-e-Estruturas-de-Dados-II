@@ -142,20 +142,19 @@ public class Grafo{
      * @return <b>true</b> se os dois vértices estão no mesmo conjunto e <b>false</b> caso contrário
      */
     private boolean mesmoConjunto(Integer vertice1, Integer vertice2, Grafo mst){
-        Node atual;
+        Node atual = mst.vertice[vertice1].getHead();
         Boolean same = false;
 
-        if(mst.vertice[vertice1].getHead() != null){
+        if(atual != null){
+ 
+             while(same == false && atual != null){
+    
+                  if(atual.getIdentificador() == vertice2)
+                       same = true;
 
-              for(atual = mst.vertice[vertice1].getHead(); atual != null; atual = atual.getNext()){
+                  atual = atual.getNext();
 
-                   if(atual.getIdentificador() == vertice2){
-                      same = true;
-                      break;
-
-                   }
-
-              }
+             }
 
         }
 
