@@ -1,0 +1,123 @@
+@startuml E-commerce
+
+skinparam ClassBackgroundColor #555555
+skinparam ClassBorderColor #blue
+
++class MarketPlace{
+    -nome: String
+    -usuarios: List<Usuario>
+    -produtos: List<Produto>
+
+    +MarketPlace(String)
+    +incluirUsuario(usuario: Usuario): boolean
+    +excluirUsuario(usuario: String): Usuario
+    +incluirProduto(produto: Produto): boolean
+    +excluirProduto(produto: String): Produto
+    +login(senha: String, usuario: Usuario): boolean
+    +getNome(): String
+    +toString(): String
+
+}
+
++abstract class Usuario{
+    -cpf: String
+    -nome: String
+    -senha: String
+    -contato: Contato
+    -endereco: Endereco
+
+    +getCpf(): String
+    +getNome(): String
+    +getSenha(): String
+    +getContato(): Contato
+    +getEndereco(): Endereco
+    +toString(): String
+
+}
+
++class Anunciante{
+    -cnpj: String
+    -listaDeProdutos: List<Produto>
+
+    +getCnpj(): String
+    +toString(): String
+
+}
+
++class Comprador{
+    -carrinho: List<Produto>
+    -favoritos: List<Produto>
+
+    +toString(): String
+
+}
+
++class Produto{
+    -id: Integer
+    -nome: String
+    -categoria: String
+    -preco: Double
+    -marca: String
+    -estoque: Integer
+    -vendedor: Anunciante
+
+    +getId(): Integer
+    +getNome(): String
+    +getCategoria(): String
+    +getPreco(): Double
+    +getMarca(): String
+    +getEstoque(): Integer
+    +getVendedor(): Anunciante
+    +toString(): String
+
+}
+
++class Endereco{
+    -logradouro: String
+    -numero: String
+    -complemento: String
+    -bairro: String
+    -cep: String
+    -cidade: String
+    -uf: String
+
+    +getLogradouro(): String
+    +getNumero(): String
+    +getComplemento(): String
+    +getBairro(): String
+    +getCep(): String
+    +getCidade(): String
+    +getUf(): String
+    +toString(): String
+
+}
+
++interface Comparable{
+
+}
+
++class Contato{
+    -telefone: String
+    -email: String
+
+    +getTelefone(): String
+    +getEmail(): String
+    +toString(): String
+
+}
+
+Usuario <|-- Anunciante
+Usuario <|-- Comprador
+
+Produto --> Anunciante
+
+Comparable <|.. Usuario
+Comparable <|.. Produto
+
+MarketPlace "1..*" --o Usuario
+MarketPlace "1..*" --o Produto
+
+Usuario --> Contato
+Usuario --> Endereco
+
+@enduml

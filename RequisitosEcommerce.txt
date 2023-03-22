@@ -1,0 +1,5 @@
+-O que eu vendo?        (PRODUTOS OU SERVIÇOS?)
+-Logistica de entrega
+-Meio de pagamento      (Credito, debito, dinheiro fisico?)
+-Usuario/Login          (Nome do usuário, senha do usuário)
+-Carrinho de compras
