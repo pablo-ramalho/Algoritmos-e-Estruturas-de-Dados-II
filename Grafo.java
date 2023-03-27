@@ -1,7 +1,8 @@
 package Kruskal;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -24,133 +25,131 @@ public class Grafo{
 
     }
 
-    //======================KRUSKAL========================
+    //=========================KRUSKAL===============================
     /**
-     * Constrói um objeto que representa um grafo<br></br>
-     * <b>OBS: </b>Este segundo construtor foi criado pois o construtor com o parâmetro <b>numeroDeVertices</b>
-     * é usado para criar grafos usando a entrada padrão pelo usuário, somente sendo usado para criar o grafo original.
-     * @param grafo o grafo original que será usado para criar a floresta.
+     * Constrói um objeto que representa um grafo a partir de um grafo já criado (cópia) <br></br>
+     * <b>OBS: </b>este construtor é necessário para que seja criada a floresta a partir
+     * do grafo passado como parâmetro, pois o construtor acima é usado
+     * para criar o grafo usando a entrada padrão pelo usuário
+     * @param grafoOriginal o grafo a partir do qual se criará a árvore geradora mínima
      */
-    public Grafo(Grafo grafo){
+    public Grafo(Grafo grafoOriginal){
         Integer index;
-        
-        this.vertice = new Lista[grafo.vertice.length];
 
-        for(index = 0; index < this.vertice.length; index++)
+        this.vertice = new Lista[grafoOriginal.vertice.length];
+
+        for(index = 0; index < vertice.length; index++)
             this.vertice[index] = new Lista(index, 0);
 
     }
 
     public Grafo kruskal(Grafo grafoOriginal){
-        Grafo mst;                   //Árvore geradora mínima criada a partir do grafo original
-        Queue<Lista> arestas = null; //Armazena as arestas do grafo original (inicialmente vazia)
-        Integer index;               //Percorre a lista de adjacências (de 0 a n - 1, onde n corresponde ao número de vértices do grafo) e serve como índice iterador para adicionar as arestas bidirecionais
-        Node atual, auxiliar;        //Itera sobre as adjacências de cada vértice
-        Lista aresta;                //Armazena temporariamente informações de cada aresta para incluí-las na fiia de prioridade
+        Grafo mst;
+        List<Lista> cortes;
 
-        //Cria a floresta (inicialmente todos os vértices têm grau 0)
+        //Cria a floresta (todos os vértices com grau 0)
         mst = new Grafo(grafoOriginal);
 
-        //Cria uma fila de prioridade para armazenar as arestas do grafo original
-        arestas = new PriorityQueue<>();
+        //Faz os cortes no grafo original
+        cortes = this.extrairArestas(grafoOriginal);
 
-        /**
-         * Adiciona as arestas do grafo à fila de prioridade (faz os cortes).
-         * A implementação interna de uma PriorityQueue<> já faz
-         * a ordenação dos elementos por padrão em ordem crescente
-         */
-        for(index = 0; index < grafoOriginal.vertice.length; index++){
-            
-            for(atual = grafoOriginal.vertice[index].getHead(); atual != null; atual = atual.getNext()){
-                
-                //Restringe a adição das arestas simétricas na fila de prioridade
-                auxiliar = grafoOriginal.vertice[atual.getIdentificador()].getHead();
-                
-                if(auxiliar != null){
+        //Ordena as arestas com base no critério de peso
+        Collections.sort(cortes);
 
-                      do{
-                        
-                          if(auxiliar.getIdentificador() != grafoOriginal.vertice[index].getRotulo()){
-                              aresta = new Lista(index, 1);
-                              aresta.adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
-                              arestas.offer(aresta);
-                        
-                          }
+	//Conecta os vértices de forma a não formar ciclos
+	this.unionFind(mst, cortes);
 
-                          auxiliar = auxiliar.getNext();
-
-                       }while(auxiliar != null);
-
-                 }
-                    
-            }
-
-        }
-
-        //TESTE
-        for(Lista aux : arestas){
-            System.out.print("[ " + aux.getRotulo() + " ] - " + aux.getHead().getPeso() + " -> ");
-            aux.imprimir();
-
-        }
-
-        /** 
-         * Seleciona e adiciona as arestas seguras 
-         * à árvore geradora mínima a partir da fila de prioridade
-        */
-        while(arestas.isEmpty() != false){
-
-            aresta = arestas.poll();
-            
-            //Se a próxima aresta obtida na fila de prioridade não forma um ciclo entre os dois vértices ela é adicionada à árvore geradora mínima
-            if(this.mesmoConjunto(aresta.getRotulo(), mst.vertice[aresta.getRotulo()].getHead().getIdentificador(), mst) == false){
-                
-                mst.vertice[aresta.getRotulo()].adicionarNoFinal(aresta.getHead().getIdentificador(), aresta.getHead().getPeso(), new Node(aresta.getHead().getIdentificador(), aresta.getHead().getPeso()));
-                mst.vertice[aresta.getRotulo()].setNumeroDeElementos(aresta.getNumeroDeElementos() + 1);
-                
-                mst.vertice[aresta.getHead().getIdentificador()].adicionarNoFinal(aresta.getRotulo(), aresta.getHead().getPeso(), new Node(aresta.getRotulo(), aresta.getHead().getPeso()));
-                mst.vertice[aresta.getHead().getIdentificador()].setNumeroDeElementos(aresta.getNumeroDeElementos() + 1);
-
-            }
-        
-            //Caso contrário a aresta é descartada
-
-        }
-
-        return mst;
+	return mst;
 
     }
 
     /**
-     * Método auxiliar para verificar se dois vértices especificados
-     * como parâmetro pertencem no mesmo conjunto ou não
-     * @param vertice1 o vértice de origem
-     * @param vertice2 o vértice de destino
-     * @param mst a árvore geradora mínima obtida até o momento
-     * @return <b>true</b> se os dois vértices estão no mesmo conjunto e <b>false</b> caso contrário
+     * Faz os cortes no grafo original, armazenando cada aresta em um vetor dinâmico
+     * de forma que todos os vértices tenham grau 1<br></br>
+     * <b>Exemplos de cortes:</b><br></br>
+     * [ 1 ] - 3 - ( 4 )<br></br>
+     * [ 7 ] - 1 - ( 2 )
+     * @param grafoOriginal o grafo a partir do qual serão extraídas as arestas
+     * @return um vetor dinâmico contendo as arestas do grafo original
      */
-    private boolean mesmoConjunto(Integer vertice1, Integer vertice2, Grafo mst){
-        Node atual = mst.vertice[vertice1].getHead();
-        Boolean same = false;
+    public List<Lista> extrairArestas(Grafo grafoOriginal){
+        Node atual;
+        Integer index, secondIndex;
+        List<Lista> cortes;
 
-        if(atual != null){
- 
-             while(same == false && atual != null){
-    
-                  if(atual.getIdentificador() == vertice2)
-                       same = true;
+        cortes = new ArrayList<>();
 
-                  atual = atual.getNext();
+        //Obtém as arestas do grafo original e as armazena no vetor dinâmico
+        for(index = 0; index < grafoOriginal.vertice.length; index++){
+            for(atual = grafoOriginal.vertice[index].getHead(); atual != null; atual = atual.getNext()){
+                cortes.add(new Lista(index, 1));
+                cortes.get(index).adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
 
-             }
+            }
 
         }
 
-        return same;
+        //Retira as arestas simétricas
+        for(index = 0; index < cortes.size(); index++){
+            for(secondIndex = index + 1; secondIndex < cortes.size(); secondIndex++){
+                
+                if(cortes.get(secondIndex).getHead().getIdentificador() == cortes.get(index).getRotulo() && cortes.get(secondIndex).getRotulo() == cortes.get(index).getHead().getIdentificador()){
+                    cortes.remove((int)secondIndex);
+                    break;
+
+                }
+
+            }
+
+        }
+
+        return cortes;
 
     }
 
-    //=====================================================
+	private void unionFind(Grafo mst, List<Lista> cortes){
+		List<Set<Integer>> grupos;
+		Set<Integer> grupo;
+		Integer index, conjunto;
+
+		grupos = new ArrayList<>(mst.vertice.length);
+
+		//Adiciona cada vértice a um grupo separado
+		for(index = 0; index < grupos.size(); index++){
+			grupo = new TreeSet<>();
+			grupo.add(mst.vertice[index].getRotulo());
+			grupos.add(grupo);
+
+		}
+
+		index = 0;
+		conjunto = cortes.get(index).getHead().getIdentificador();
+
+		while(grupos.size() > 1){
+		
+			if(grupos.get(cortes.get(index).getRotulo()).contains(cortes.get(index).getHead().getIdentificador()) == false){
+				mst.vertice[cortes.get(index).getRotulo()].adicionarNoInicio(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso()));
+				mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
+
+				mst.vertice[cortes.get(index).getHead().getIdentificador()].adicionarNoInicio(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso()));
+				mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
+
+				grupos.get(cortes.get(index).getRotulo()).addAll(grupos.get(conjunto));
+				grupos.remove((int)conjunto);
+
+			}
+
+			conjunto = cortes.get(index).getHead().getIdentificador();
+			
+			for(; conjunto >= grupos.size(); conjunto--);
+
+			for(; grupos.get(conjunto).first() != cortes.get(index).getRotulo(); conjunto--);
+
+		}
+
+	}
+
+    //===============================================================
 
     /**
      * Determina a quantidade de vértices adjacentes a cada vértice.
@@ -183,6 +182,8 @@ public class Grafo{
             System.out.println((grau < 0 || grau > this.vertice.length) ? "Graus negativos ou maiores que a quantidade de vértices não são válidos. Por favor digite um grau maior ou igual a zero: " : "Grau do vértice: " + grau + "\n");
 
         }while(grau < 0 || grau > this.vertice.length);
+
+        leitor.close();
 
         return grau;
 
