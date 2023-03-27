@@ -83,10 +83,10 @@ public class Grafo{
         //Obtém as arestas do grafo original e as armazena no vetor dinâmico
         for(index = 0; index < grafoOriginal.vertice.length; index++){
             for(atual = grafoOriginal.vertice[index].getHead(); atual != null; atual = atual.getNext()){
-                aresta = new Lista(index, 1);
+                aresta = new Lista(atual.getRotulo(), 1);
+                aresta.adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
                 cortes.add(aresta);
-                cortes.get(index).adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
-
+		    
             }
 
         }
