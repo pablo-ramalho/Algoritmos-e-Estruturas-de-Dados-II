@@ -7,10 +7,8 @@ package Kruskal;
  * tail - o último nó da lista<br></br>
  * rotulo - o número (maior ou igual a 0) que identifica a lista<br></br>
  * numeroDeElementos - quantidade de nós que a lista tem<br></br>
- * <b>Obs: </b>Para que a ordenação das arestas por peso em ordem crescente seja feita
-*  é necessário que esta classe implemente a interface Comparable<Lista>
  */
-public class Lista implements Comparable<Lista>{
+public class Lista{
 
     private Node head;
     private Node tail;
@@ -251,33 +249,5 @@ public class Lista implements Comparable<Lista>{
         this.numeroDeElementos = numeroDeElementos;
 
     }
-
-    //========================KRUSKAL===========================
-
-    @Override
-    public int compareTo(Lista aresta){
-        
-        if(this.getHead().getPeso() < aresta.getHead().getPeso())
-            return -1;
-
-        else
-            if(this.getHead().getPeso() > aresta.getHead().getPeso())
-                return 1;
-
-        else{
-
-            if(this.getRotulo() < aresta.getRotulo())
-                return -1;
-
-            else
-                if(this.getRotulo() > aresta.getRotulo())
-                    return 1;
-
-            return 0;
-
-        }
-
-    }
-    //=========================================================
 
 }
