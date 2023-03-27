@@ -124,6 +124,7 @@ public class Grafo{
 
 		index = 0;
 		conjunto = cortes.get(index).getHead().getIdentificador();
+		
 
 		while(grupos.size() > 1 && index < cortes.size()){
 		
