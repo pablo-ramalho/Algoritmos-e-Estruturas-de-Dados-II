@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Esta classe representa um grafo tendo
@@ -161,8 +163,10 @@ public class Grafo{
     private void imprimirCortes(List<Lista> cortes){
         Integer index;
 
+        System.out.println();
+
         for(index = 0; index < cortes.size(); index++)
-            System.out.println("[ " + cortes.get(index).getRotulo() + " ] --> ( " + cortes.get(index).getHead().getIdentificador() + " ) -->");
+            System.out.println("[ " + cortes.get(index).getRotulo() + " ] - " + cortes.get(index).getHead().getPeso() + " -> ( " + cortes.get(index).getHead().getIdentificador() + " ) -->");
 
         System.out.println();
 
