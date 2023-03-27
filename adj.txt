@@ -13,33 +13,20 @@ Grafo original:
 
 1º Passo) Cortes no Grafo:
 [ 6 ] - 1 -> ( 7 ) --> NULL
-[ 7 ] - 1 -> ( 6 ) --> NULL
 [ 2 ] - 2 -> ( 8 ) --> NULL
-[ 8 ] - 2 -> ( 2 ) --> NULL
 [ 5 ] - 2 -> ( 6 ) --> NULL
-[ 6 ] - 2 -> ( 5 ) --> NULL
 [ 0 ] - 4 -> ( 1 ) --> NULL
-[ 1 ] - 4 -> ( 0 ) --> NULL
 [ 2 ] - 4 -> ( 5 ) --> NULL
-[ 5 ] - 4 -> ( 2 ) --> NULL
 [ 6 ] - 6 -> ( 8 ) --> NULL
-[ 8 ] - 6 -> ( 6 ) --> NULL
-[ 2 ] - 7 -> ( 3 ) --> NUKL
-[ 3 ] - 7 -> ( 2 ) --> NULL
+[ 2 ] - 7 -> ( 3 ) --> NULL
 [ 7 ] - 7 -> ( 8 ) --> NULL
-[ 8 ] - 7 -> ( 7 ) --> NULL
 [ 0 ] - 8 -> ( 7 ) --> NULL
-[ 7 ] - 8 -> ( 0 ) --> NULL
 [ 1 ] - 8 -> ( 2 ) --> NULL
-[ 2 ] - 8 -> ( 1 ) --> HULL
 [ 3 ] - 9 -> ( 4 ) --> NULL
-[ 4 ] - 9 -> ( 3 ) --> NULL
 [ 4 ] - 10 -> ( 5 ) --> NULL
-[ 5 ] - 10 -> ( 4 ) --> NULL
 [ 1 ] - 11 -> ( 7 ) --> NULL
-[ 7 ] - 11 -> ( 1 ) --> NULL
 [ 3 ] - 14 -> ( 5 ) --> NULL
-[ 5 ] - 14 -> ( 3 ) --> NUKL
+14 Arestas (Excluindo as simétricas)
 
 Final Minimum Spanning Tree
 [ 0 ] - 4 -> ( 1 ) - 8 -> ( 7 ) --> NULL
