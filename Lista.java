@@ -8,7 +8,7 @@ package Kruskal;
  * rotulo - o número (maior ou igual a 0) que identifica a lista<br></br>
  * numeroDeElementos - quantidade de nós que a lista tem<br></br>
  */
-public class Lista{
+public class Lista implements Comparable<Lista>{
 
     private Node head;
     private Node tail;
@@ -249,5 +249,21 @@ public class Lista{
         this.numeroDeElementos = numeroDeElementos;
 
     }
+
+    //==========================KRUSKAL===========================
+    @Override
+    public int compareTo(Lista aresta){
+    
+        if(this.getHead().getPeso() < aresta.getHead().getPeso())
+            return -1;
+
+        else
+            if(this.getHead().getPeso() > aresta.getHead().getPeso())
+                return 1;
+
+        return 0;
+    
+    }
+    //=============================================================
 
 }

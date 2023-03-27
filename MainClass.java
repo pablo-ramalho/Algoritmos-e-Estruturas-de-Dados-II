@@ -42,11 +42,12 @@ public class MainClass{
 
         grafo.imprimirGrafo();
 
-	//====================KRUSKAL========================
-        mst = kruskal(grafo);
 
-	System.out.println("ÁRVORE GERADORA MÍNIMA OBTIDA:");
-	mst.imprimirGrafo();
+	    //====================KRUSKAL========================
+        mst = grafo.kruskal(grafo);
+
+	    System.out.println("ÁRVORE GERADORA MÍNIMA OBTIDA:");
+	    mst.imprimirGrafo();
 	//===================================================
 	
         //leitor.close();
@@ -78,4 +79,6 @@ public class MainClass{
         return numeroDeVertices;
 
     }
+
+}
     

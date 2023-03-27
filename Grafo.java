@@ -56,10 +56,10 @@ public class Grafo{
         //Ordena as arestas com base no critério de peso
         Collections.sort(cortes);
 
-	//Conecta os vértices de forma a não formar ciclos
-	this.unionFind(mst, cortes);
+	    //Conecta os vértices de forma a não formar ciclos
+	    this.unionFind(mst, cortes);
 
-	return mst;
+	    return mst;
 
     }
 
@@ -76,13 +76,15 @@ public class Grafo{
         Node atual;
         Integer index, secondIndex;
         List<Lista> cortes;
+        Lista aresta;
 
         cortes = new ArrayList<>();
 
         //Obtém as arestas do grafo original e as armazena no vetor dinâmico
         for(index = 0; index < grafoOriginal.vertice.length; index++){
             for(atual = grafoOriginal.vertice[index].getHead(); atual != null; atual = atual.getNext()){
-                cortes.add(new Lista(index, 1));
+                aresta = new Lista(index, 1);
+                cortes.add(aresta);
                 cortes.get(index).adicionarNoInicio(atual.getIdentificador(), atual.getPeso(), new Node(atual.getIdentificador(), atual.getPeso()));
 
             }
@@ -91,7 +93,7 @@ public class Grafo{
 
         //Retira as arestas simétricas
         for(index = 0; index < cortes.size(); index++){
-            for(secondIndex = index + 1; secondIndex < cortes.size(); secondIndex++){
+            for(secondIndex = index; secondIndex < cortes.size(); secondIndex++){
                 
                 if(cortes.get(secondIndex).getHead().getIdentificador() == cortes.get(index).getRotulo() && cortes.get(secondIndex).getRotulo() == cortes.get(index).getHead().getIdentificador()){
                     cortes.remove((int)secondIndex);
@@ -110,7 +112,7 @@ public class Grafo{
 	private void unionFind(Grafo mst, List<Lista> cortes){
 		List<Set<Integer>> grupos;
 		Set<Integer> grupo;
-		Integer index, conjunto;
+		Integer index, conjunto1, conjunto2;
 
 		grupos = new ArrayList<>(mst.vertice.length);
 
@@ -122,32 +124,29 @@ public class Grafo{
 
 		}
 
-		index = 0;
-		conjunto = cortes.get(index).getHead().getIdentificador();
-		
+        //Faz a união dos conjuntos de forma a não conter ciclos
+        for(index = 0; grupos.size() > 1 && index < cortes.size(); index++){
+            conjunto1 = cortes.get(index).getRotulo();
+            conjunto2 = cortes.get(index).getHead().getIdentificador();
 
-		while(grupos.size() > 1 && index < cortes.size()){
-		
-			if(grupos.get(conjunto).contains(cortes.get(index).getHead().getIdentificador()) == false){
-				mst.vertice[cortes.get(index).getRotulo()].adicionarNoInicio(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso()));
-				mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
+            for(; grupos.get(conjunto1).first() != cortes.get(index).getRotulo(); conjunto1--);
+            
+            for(; conjunto >= grupos.size(); conjunto2--);
+            for(; grupos.get(conjunto2).first() != cortes.get(index).getHead().getIdentificador(); conjunto2--);
 
-				mst.vertice[cortes.get(index).getHead().getIdentificador()].adicionarNoInicio(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso()));
+            if(grupos.get(conjunto1).contains(cortes.get(index).getHead().getIdentificador())){
+                mst.vertice[cortes.get(index).getRotulo()].adicionarNoInicio(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHEad().getPeso(), new Node(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso()));
+                mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
+
+                mst.vertice[cortes.get(index).getHead().getIdentificador()].adicionarNoInicio(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso()));
 				mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
 
-				grupos.get(cortes.get(index).getRotulo()).addAll(grupos.get(conjunto));
-				grupos.remove((int)conjunto);
+                grupos.get(conjunto1).addAll(grupos.get(conjunto2));
+                grupos.remove((int)conjunto2);
 
-			}
-			
-			index++;
-			conjunto = cortes.get(index).getHead().getIdentificador();
-			
-			for(; conjunto >= grupos.size(); conjunto--);
+            }
 
-			for(; grupos.get(conjunto).first() != cortes.get(index).getRotulo(); conjunto--);
-
-		}
+        }
 
 	}
 
@@ -185,7 +184,7 @@ public class Grafo{
 
         }while(grau < 0 || grau > this.vertice.length);
 
-        leitor.close();
+        //leitor.close();
 
         return grau;
 
