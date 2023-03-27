@@ -53,8 +53,16 @@ public class Grafo{
         //Faz os cortes no grafo original
         cortes = this.extrairArestas(grafoOriginal);
 
+        //Imprime as arestas extraídas do grafo
+        System.out.println("ARESTAS OBTIDAS DO GRAFO:");
+        this.imprimirCortes(cortes);
+
         //Ordena as arestas com base no critério de peso
         Collections.sort(cortes);
+
+        //Imprime as arestas em ordem crescente de peso
+        System.out.println("ARESTAS ORDENADAS PELO PESO:");
+        this.imprimirCortes(cortes);
 
 	    //Conecta os vértices de forma a não formar ciclos
 	    this.unionFind(mst, cortes);
@@ -149,6 +157,16 @@ public class Grafo{
         }
 
 	}
+
+    private void imprimirCortes(List<Lista> cortes){
+        Integer index;
+
+        for(index = 0; index < cortes.size(); index++)
+            System.out.println("[ " + cortes.get(index).getRotulo() + " ] --> ( " + cortes.get(index).getHead().getIdentificador() + " ) -->");
+
+        System.out.println();
+
+    }
 
     //===============================================================
 
