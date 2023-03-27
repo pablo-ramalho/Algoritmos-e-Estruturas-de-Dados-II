@@ -125,9 +125,9 @@ public class Grafo{
 		index = 0;
 		conjunto = cortes.get(index).getHead().getIdentificador();
 
-		while(grupos.size() > 1){
+		while(grupos.size() > 1 && index < cortes.size()){
 		
-			if(grupos.get(cortes.get(index).getRotulo()).contains(cortes.get(index).getHead().getIdentificador()) == false){
+			if(grupos.get(conjunto).contains(cortes.get(index).getHead().getIdentificador()) == false){
 				mst.vertice[cortes.get(index).getRotulo()].adicionarNoInicio(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso()));
 				mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
 
@@ -138,7 +138,8 @@ public class Grafo{
 				grupos.remove((int)conjunto);
 
 			}
-
+			
+			index++;
 			conjunto = cortes.get(index).getHead().getIdentificador();
 			
 			for(; conjunto >= grupos.size(); conjunto--);
