@@ -72,7 +72,7 @@ public class Grafo{
      * @param grafoOriginal o grafo a partir do qual serão extraídas as arestas
      * @return um vetor dinâmico contendo as arestas do grafo original
      */
-    public List<Lista> extrairArestas(Grafo grafoOriginal){
+    private List<Lista> extrairArestas(Grafo grafoOriginal){
         Node atual;
         Integer index, secondIndex;
         List<Lista> cortes;
