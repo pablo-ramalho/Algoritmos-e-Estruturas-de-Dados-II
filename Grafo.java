@@ -128,7 +128,7 @@ public class Grafo{
 		grupos = new ArrayList<>(mst.vertice.length);
 
 		//Adiciona cada vértice a um grupo separado
-		for(index = 0; index < grupos.size(); index++){
+		for(index = 0; index < cortes.size(); index++){
 			grupo = new TreeSet<>();
 			grupo.add(mst.vertice[index].getRotulo());
 			grupos.add(grupo);
