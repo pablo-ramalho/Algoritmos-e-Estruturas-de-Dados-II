@@ -139,6 +139,7 @@ public class Grafo{
             conjunto1 = cortes.get(index).getRotulo();
             conjunto2 = cortes.get(index).getHead().getIdentificador();
 
+            for(; conjunto1 >= grupos.size(); conjunto1--);
             for(; grupos.get(conjunto1).contains(cortes.get(index).getRotulo()) == false; conjunto1--);
             
             for(; conjunto2 >= grupos.size(); conjunto2--);
