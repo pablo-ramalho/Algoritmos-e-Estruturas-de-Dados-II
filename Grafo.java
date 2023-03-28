@@ -139,17 +139,17 @@ public class Grafo{
             conjunto1 = cortes.get(index).getRotulo();
             conjunto2 = cortes.get(index).getHead().getIdentificador();
 
-            for(; grupos.get(conjunto1).first() != cortes.get(index).getRotulo(); conjunto1--);
+            for(; grupos.get(conjunto1).contains(cortes.get(index).getRotulo()) == false; conjunto1--);
             
             for(; conjunto2 >= grupos.size(); conjunto2--);
-            for(; grupos.get(conjunto2).first() != cortes.get(index).getHead().getIdentificador(); conjunto2--);
+            for(; grupos.get(conjunto2).contains(cortes.get(index).getHead().getIdentificador()) == false; conjunto2--);
 
             if(grupos.get(conjunto1).contains(cortes.get(index).getHead().getIdentificador())){
                 mst.vertice[cortes.get(index).getRotulo()].adicionarNoInicio(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso()));
                 mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
 
                 mst.vertice[cortes.get(index).getHead().getIdentificador()].adicionarNoInicio(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso()));
-				mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
+		mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
 
                 grupos.get(conjunto1).addAll(grupos.get(conjunto2));
                 grupos.remove((int)conjunto2);
