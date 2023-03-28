@@ -151,7 +151,7 @@ public class Grafo{
                 mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
 
                 mst.vertice[cortes.get(index).getHead().getIdentificador()].adicionarNoInicio(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso()));
-		        mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
+		mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(cortes.get(index).getNumeroDeElementos() + 1);
 
                 grupos.get(conjunto1).addAll(grupos.get(conjunto2));
                 grupos.remove((int)conjunto2);
