@@ -135,44 +135,44 @@ public class Grafo{
 
 		}
 
-        //Faz a união dos conjuntos de forma a não conter ciclos
-        for(index = 0; grupos.size() > 1 && index < cortes.size(); index++){
-            conjunto1 = cortes.get(index).getRotulo();
-            conjunto2 = cortes.get(index).getHead().getIdentificador();
+        	//Faz a união dos conjuntos de forma a não conter ciclos
+        	for(index = 0; grupos.size() > 1 && index < cortes.size(); index++){
+            		conjunto1 = cortes.get(index).getRotulo();
+            		conjunto2 = cortes.get(index).getHead().getIdentificador();
 
-            for(; conjunto1 >= grupos.size(); conjunto1--);
-            for(; grupos.get(conjunto1).contains(cortes.get(index).getRotulo()) == false; conjunto1--);
+            		for(; conjunto1 >= grupos.size(); conjunto1--);
+            		for(; grupos.get(conjunto1).contains(cortes.get(index).getRotulo()) == false; conjunto1--);
             
-            for(; conjunto2 >= grupos.size(); conjunto2--);
-            for(; grupos.get(conjunto2).contains(cortes.get(index).getHead().getIdentificador()) == false; conjunto2--);
+            		for(; conjunto2 >= grupos.size(); conjunto2--);
+            		for(; grupos.get(conjunto2).contains(cortes.get(index).getHead().getIdentificador()) == false; conjunto2--);
 
-            if(grupos.get(conjunto1).contains(grupos.get(conjunto2).first()) == false){
-                mst.vertice[cortes.get(index).getRotulo()].adicionarNoInicio(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso()));
-                mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(mst.vertice[cortes.get(index).getRotulo()].getNumeroDeElementos() + 1);
+            		if(grupos.get(conjunto1).contains(grupos.get(conjunto2).first()) == false){
+                		mst.vertice[cortes.get(index).getRotulo()].adicionarNoInicio(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getHead().getIdentificador(), cortes.get(index).getHead().getPeso()));
+                		mst.vertice[cortes.get(index).getRotulo()].setNumeroDeElementos(mst.vertice[cortes.get(index).getRotulo()].getNumeroDeElementos() + 1);
 
-                mst.vertice[cortes.get(index).getHead().getIdentificador()].adicionarNoInicio(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso()));
-		mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(mst.vertice[cortes.get(index).getHead().getIdentificador()].getNumeroDeElementos() + 1);
+                		mst.vertice[cortes.get(index).getHead().getIdentificador()].adicionarNoInicio(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso(), new Node(cortes.get(index).getRotulo(), cortes.get(index).getHead().getPeso()));
+				mst.vertice[cortes.get(index).getHead().getIdentificador()].setNumeroDeElementos(mst.vertice[cortes.get(index).getHead().getIdentificador()].getNumeroDeElementos() + 1);
 
-                grupos.get(conjunto1).addAll(grupos.get(conjunto2));
-                grupos.remove((int)conjunto2);
+                		grupos.get(conjunto1).addAll(grupos.get(conjunto2));
+                		grupos.remove((int)conjunto2);
 
-            }
+            		}
 
-        }
+        	}
 
 	}
 
-    private void imprimirCortes(List<Lista> cortes){
-        Integer index;
+    	private void imprimirCortes(List<Lista> cortes){
+        	Integer index;
 
-        System.out.println();
+        	System.out.println();
 
-        for(index = 0; index < cortes.size(); index++)
-            System.out.println("[ " + cortes.get(index).getRotulo() + " ] - " + cortes.get(index).getHead().getPeso() + " -> ( " + cortes.get(index).getHead().getIdentificador() + " ) -->");
+        	for(index = 0; index < cortes.size(); index++)
+            		System.out.println("[ " + cortes.get(index).getRotulo() + " ] - " + cortes.get(index).getHead().getPeso() + " -> ( " + cortes.get(index).getHead().getIdentificador() + " ) -->");
 
-        System.out.println();
+        	System.out.println();
 
-    }
+    	}
 
     //===============================================================
 
